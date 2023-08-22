@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "176209624777",
+    "firebase_url": "https://armeasure-2a82a-default-rtdb.firebaseio.com",
+    "project_id": "armeasure-2a82a",
+    "storage_bucket": "armeasure-2a82a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176209624777:android:70710aac0af413cab4d718",
+        "android_client_info": {
+          "package_name": "org.tensorflow.lite.examples.objectdetection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176209624777-98qitbhbnqo0l2sin2ljmqiliqaleuu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9XlTHNtOJhbySG29QEaKVat-1QGqHaBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176209624777-98qitbhbnqo0l2sin2ljmqiliqaleuu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
