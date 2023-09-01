@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="org.tensorflow.lite.examples.objectdetection">
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Enable instant app support -->
     <dist:module dist:instant="true" /> <!-- Declare features -->
     <uses-feature android:name="android.hardware.camera" /> <!-- Declare permissions -->
@@ -19,15 +18,17 @@
             android:name=".Login"
             android:theme="@style/AppTheme"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
+        <activity android:name=".HistorialActivity"
+            android:theme="@style/AppTheme"
+            android:exported="true"/>
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme"
+            android:exported="true"/>
+        <activity android:name=".SettingsActivity"
+            android:theme="@style/AppTheme"
+            android:exported="true"/>
         <activity
             android:name=".MenuActivity"
             android:theme="@style/AppTheme"

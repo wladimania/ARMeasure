@@ -5,11 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.View
+import androidx.room.Room
 
 class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.menu)
     }
 
@@ -19,14 +22,14 @@ class MenuActivity : AppCompatActivity() {
     }
 
     fun onHistoryClick(view: View) {
-        // Código para manejar el clic en el botón "Historial"
+        startActivity(Intent(this, HistorialActivity::class.java))
     }
 
     fun onSettingsClick(view: View) {
-        // Código para manejar el clic en el botón "Configuración"
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     fun onProfileClick(view: View) {
-        // Código para manejar el clic en el botón "Perfil"
+        startActivity(Intent(this, ProfileActivity::class.java))
     }
 }

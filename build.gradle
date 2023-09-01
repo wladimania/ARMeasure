@@ -3,16 +3,16 @@
 buildscript {
     // Top-level variables used for versioning
     ext.kotlin_version = '1.8.0'
-    ext.java_version = JavaVersion.VERSION_1_8
+    ext.java_version = JavaVersion.VERSION_17
 
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.1'
+        classpath 'com.android.tools.build:gradle:8.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1'
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0'
         classpath 'de.undercouch:gradle-download-task:4.1.2'
         classpath 'com.google.gms:google-services:4.3.15' // Actualiza la versión si es necesario
 
