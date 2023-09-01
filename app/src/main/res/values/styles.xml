@@ -38,5 +38,9 @@
         <item name="android:padding">16dp</item>
 
     </style>
-
+    <style name="BotonVolver">
+        <item name="android:background">@drawable/boton_volver_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <!-- Otros atributos de estilo -->
+    </style>
 </resources>

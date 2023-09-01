@@ -27,4 +27,6 @@
     <color name="icActive">#FFFFFFFF</color>
     <color name="icFocused">#DDFFFFFF</color>
     <color name="icPressed">#AAFFFFFF</color>
+    <color name="colorBotonVolver">#FF5722</color>
+
 </resources>

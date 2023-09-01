@@ -22,6 +22,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.tensorflow.lite.examples.objectdetection.databinding.ActivityMainBinding
@@ -29,6 +30,8 @@ import com.ingenieriajhr.teachablemachine.tflite.ClassifyImageTf
 import com.ingenieriajhr.teachablemachine.tflite.ReturnInterpreter
 import com.ingenieriiajhr.jhrCameraX.BitmapResponse
 import com.ingenieriiajhr.jhrCameraX.CameraJhr
+import org.tensorflow.lite.examples.objectdetection.util.Lecturas
+import org.tensorflow.lite.examples.objectdetection.util.SessionManager
 
 
 /**
@@ -78,11 +81,32 @@ class MainActivity : AppCompatActivity() {
         if (formulaClickeada == formulasCorrectas[correctAnswer]) {
             clickedView.setBackgroundResource(R.drawable.background_gree)
         } else {
+            var resu = "No";
             for (optionView in formulaOptions) {
+
                 if (optionView == clickedView) {
                     optionView.setBackgroundResource(R.drawable.background_red)
                 } else if (formulasCorrectas[correctAnswer] == optionView.text.toString()) {
                     optionView.setBackgroundResource(R.drawable.background_gree)
+                    resu = "Si"
+                }
+            }
+            val clas = Lecturas()
+            val user = SessionManager.getCurrentUser();
+            if (user != null) {
+                val nombre = user.displayName?.ifEmpty { "" }
+                if (nombre != null) {
+                    clas.guardarRegistro(user.uid, "", nombre , this.correctAnswer.toString()
+                        , resu, onComplete = {
+                            // La operación de guardado se ha completado con éxito
+                            println("Guardado exitoso")
+                            // Aquí puedes realizar otras acciones después de un guardado exitoso
+                        },
+                        onError = { excepcion ->
+                            // Ocurrió un error durante la operación de guardado
+                            println("Error durante el guardado: $excepcion")
+                            // Aquí puedes manejar el error de acuerdo a tus necesidades
+                        })
                 }
             }
         }

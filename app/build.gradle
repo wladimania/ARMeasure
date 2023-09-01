@@ -77,6 +77,7 @@ dependencies {
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:32.2.2')
     implementation 'com.google.firebase:firebase-auth-ktx' // Dependencia específica que incluye FirebaseAuth
+    implementation 'com.google.firebase:firebase-firestore'
     // ...
 
     allprojects {
