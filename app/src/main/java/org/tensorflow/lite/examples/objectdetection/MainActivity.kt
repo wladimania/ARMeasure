@@ -39,7 +39,7 @@ import org.tensorflow.lite.examples.objectdetection.util.SessionManager
  * functionality is implemented in the form of fragments.
  */
 class MainActivity : AppCompatActivity() {
-
+    private var isResetting = false
     lateinit var binding : ActivityMainBinding
     lateinit var cameraJhr: CameraJhr
     lateinit var classifyImageTf: ClassifyImageTf
@@ -69,12 +69,18 @@ class MainActivity : AppCompatActivity() {
             binding.textViewFormulaCorrect.setBackgroundResource(R.drawable.border_orange)
             binding.textViewFormulaIncorrect1.setBackgroundResource(R.drawable.border_orange)
             binding.textViewFormulaIncorrect2.setBackgroundResource(R.drawable.border_orange)
-        }, 3000) // 3000 milisegundos = 3 segundos
+        }, 10000) // 3000 milisegundos = 3 segundos
     }
 
 
     private fun handleFormulaOptionClick(clickedView: TextView, formulaOptions: List<TextView>) {
-        clearFormulaBackgrounds()
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            startTimer()
+           // reset()
+            clearFormulaBackgrounds()
+            isResetting = false
+        }, 10000) // 10000 milisegundos = 10 segundos
 
         val formulaClickeada = clickedView.text.toString()
 
@@ -109,9 +115,16 @@ class MainActivity : AppCompatActivity() {
                         })
                 }
             }
+
         }
     }
 
+    private fun startTimer() {
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            clearFormulaBackgrounds()
+        }, 10000) // 10000 milisegundos = 10 segundos
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -135,6 +148,7 @@ class MainActivity : AppCompatActivity() {
         binding.textViewFormulaIncorrect2.setOnClickListener {
             handleFormulaOptionClick(binding.textViewFormulaIncorrect2, formulaOptions)
         }
+        startTimer()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -151,7 +165,7 @@ class MainActivity : AppCompatActivity() {
         cameraJhr.addlistenerBitmap(object : BitmapResponse {
             override fun bitmapReturn(bitmap: Bitmap?) {
                 if (bitmap != null) {
-                    if (System.currentTimeMillis() > timeRepeat + 1000) {
+                    if (System.currentTimeMillis() > timeRepeat + 10000) {
                         classifyImage(bitmap)
                         timeRepeat = System.currentTimeMillis()
                     }
