@@ -44,7 +44,8 @@ class Login : AppCompatActivity() {
                         // The user is signed in
                         Log.d("LOGIN-FIREBASE", "Sign in successful!")
                         val user = auth.currentUser
-                        user?.let { SessionManager.setCurrentUser(it) }
+                        SessionManager.setCurrentUser(user)
+                        //user?.let { SessionManager.setCurrentUser(it) }
                         startActivity(Intent(this, MenuActivity::class.java))
                     } else {
                         // The sign in failed
