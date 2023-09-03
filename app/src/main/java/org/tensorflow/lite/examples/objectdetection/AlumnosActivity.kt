@@ -1,23 +1,21 @@
 package org.tensorflow.lite.examples.objectdetection
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.tensorflow.lite.examples.objectdetection.util.AlumnoAdapter
 import org.tensorflow.lite.examples.objectdetection.util.LecturaAdapter
 import org.tensorflow.lite.examples.objectdetection.util.LecturasDAO
-import org.tensorflow.lite.examples.objectdetection.util.SessionManager
+import org.tensorflow.lite.examples.objectdetection.util.UsuariosDAO
 
-
-class HistorialActivity : AppCompatActivity() {
-
-
+class AlumnosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_historial)
+        setContentView(R.layout.activity_alumnos)
 
         val btnVolver = findViewById<Button>(R.id.btnVolver)
 
@@ -29,25 +27,17 @@ class HistorialActivity : AppCompatActivity() {
         })
 
         val id = intent.getStringExtra("id")
-        Log.d("APP_MACHONA", "idJugador: " + id)
-//        val currentUser = SessionManager.getCurrentUser()
-//        if (currentUser != null) {
         if (id != null) {
-
-            val clas = LecturasDAO()
-
-            clas.buscarRegistrosPorCondicion("idJugador", id) { registrosList ->
-
+            Log.d("APP_MACHONA", "idCurso: " + id)
+            val clas = UsuariosDAO()
+            clas.buscarRegistrosPorCondicion("idCurso", id) { registrosList ->
                 val registros = registrosList
                 val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-                val registroAdapter = LecturaAdapter(registros)
+                val registroAdapter = AlumnoAdapter(registros)
                 recyclerView.adapter = registroAdapter
                 recyclerView.layoutManager = LinearLayoutManager(this);
             }
 
         }
-
-
-
     }
 }

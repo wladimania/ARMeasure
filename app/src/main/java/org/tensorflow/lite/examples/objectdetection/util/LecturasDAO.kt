@@ -7,6 +7,7 @@ class LecturasDAO {
     private val collectionName = "lecturas"
 
     private val firestoreManager: FirestoreManager
+
     constructor() {
         firestoreManager = FirestoreManager(this.collectionName)
     }
@@ -15,11 +16,34 @@ class LecturasDAO {
         firestoreManager.listarRegistros(completion)
     }
 
-    fun buscarRegistrosPorCondicion(campo: String, valor: Any, completion: (List<Map<String, Any>>) -> Unit) {
+    fun buscarRegistrosPorCondicion(
+        campo: String,
+        valor: Any,
+        completion: (List<Map<String, Any>>) -> Unit
+    ) {
         firestoreManager.listarRegistrosConCondicion(campo, valor, completion)
     }
 
-    fun guardarRegistro(idJugador: String, idCurso: String, nombre: String, figura: String, acerto: String, idAcceso: String, onComplete: (Any?) -> Unit, onError: (Exception) -> Unit) {
+    fun buscarRegistrosPor2Condicion(
+        campo1: String,
+        valor1: Any,
+        campo2: String,
+        valor2: Any,
+        completion: (List<Map<String, Any>>) -> Unit
+    ) {
+        firestoreManager.listarRegistrosCon2Condicion(campo1, valor1, campo2, valor2, completion)
+    }
+
+    fun guardarRegistro(
+        idJugador: String,
+        idCurso: String,
+        nombre: String,
+        figura: String,
+        acerto: String,
+        idAcceso: String,
+        onComplete: (Any?) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
         val fechaActual = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
         val registro = hashMapOf(
             "idJugador" to idJugador,
@@ -33,7 +57,12 @@ class LecturasDAO {
         firestoreManager.guardarRegistro(registro, onComplete, onError)
     }
 
-    fun actualizarRegistro(documentId: String, nuevosDatos: Map<String, Any>, onComplete: () -> Unit, onError: (Exception) -> Unit) {
+    fun actualizarRegistro(
+        documentId: String,
+        nuevosDatos: Map<String, Any>,
+        onComplete: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
         firestoreManager.actualizarRegistro(documentId, nuevosDatos, onComplete, onError)
     }
 }

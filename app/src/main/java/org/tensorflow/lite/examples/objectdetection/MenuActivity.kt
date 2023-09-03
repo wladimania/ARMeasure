@@ -25,13 +25,20 @@ class MenuActivity : AppCompatActivity() {
 
             val modificarCodigoButton = findViewById<Button>(R.id.modificarCodigo)
             val verCodigoButton = findViewById<Button>(R.id.verCodigo)
+
+            val listadoAlumnosButton = findViewById<Button>(R.id.listadoAlumnosButton)
+            val historialButton = findViewById<Button>(R.id.historyButton)
             if (esAlumno) {
-                modificarCodigoButton.visibility = View.GONE
-                verCodigoButton.visibility = View.VISIBLE
+                modificarCodigoButton.visibility = View.VISIBLE
+//                historialButton.visibility = View.VISIBLE
+                verCodigoButton.visibility = View.GONE
+                listadoAlumnosButton.visibility = View.GONE
             }
             if (!esAlumno) {
                 modificarCodigoButton.visibility = View.GONE
+//                historialButton.visibility = View.GONE
                 verCodigoButton.visibility = View.VISIBLE
+                listadoAlumnosButton.visibility = View.VISIBLE
             }
         }
     }
@@ -41,8 +48,16 @@ class MenuActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
     }
 
+    fun onAlumnosListClick(view: View) {
+        val intent = Intent(this, AlumnosActivity::class.java)
+        intent.putExtra("id", SessionManager.getDataUser()?.getIdCurso())
+        startActivity(intent)
+    }
+
     fun onHistoryClick(view: View) {
-        startActivity(Intent(this, HistorialActivity::class.java))
+        val intent = Intent(this, HistorialActivity::class.java)
+        intent.putExtra("id", SessionManager.getCurrentUser()?.uid)
+        startActivity(intent)
     }
 
     fun onSettingsClick(view: View) {

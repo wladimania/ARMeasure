@@ -3,12 +3,10 @@ package org.tensorflow.lite.examples.objectdetection.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBindings
 import org.tensorflow.lite.examples.objectdetection.R
 
 class LecturaAdapter(private val registros: List<Map<String, Any>>) :
@@ -18,7 +16,7 @@ class LecturaAdapter(private val registros: List<Map<String, Any>>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegistroViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.card_lectura, parent, false)
         return RegistroViewHolder(view)
     }
 
@@ -37,20 +35,20 @@ class LecturaAdapter(private val registros: List<Map<String, Any>>) :
             textFigura.text = "Figura: " + registro["figura"].toString()
             textFecha.text = "Fecha: " + registro["fecha"].toString()
             textAcerto.text = "Acertó:" + registro["acerto"].toString()
-            if (registro["acerto"] == "si") {
+            if (registro["acerto"] == "Si") {
                 textAcerto.text = "Acertó: Si"
                 card.setCardBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.colorBotonVolver
+                        R.color.btn_success
                     )
                 ) // Cambia el color de fondo a verde
-            } else if (registro["acerto"] == "no") {
+            } else if (registro["acerto"] == "No") {
                 textAcerto.text = "Acertó: No"
                 card.setCardBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.colorOrange
+                        R.color.btn_warning
                     )
                 ) // Cambia el color de fondo a rojo
             }

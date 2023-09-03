@@ -42,7 +42,7 @@ class UsuariosDAO {
                     dataUser.setCorreo(documentSnapshot.getString("correo").toString())
                     dataUser.setNombre(documentSnapshot.getString("nombre").toString())
                     dataUser.setEsAlumno(documentSnapshot.getString("esAlumno").toString())
-                    dataUser.setIdCurso(documentSnapshot.getString("IdCurso").toString())
+                    dataUser.setIdCurso(documentSnapshot.getString("idCurso").toString())
 
                     val user = auth.currentUser
                     SessionManager.setCurrentUser(user)
@@ -81,6 +81,10 @@ class UsuariosDAO {
 
     fun actualizarRegistro(documentId: String, nuevosDatos: Map<String, Any>, onComplete: () -> Unit, onError: (Exception) -> Unit) {
         firestoreManager.actualizarRegistro(documentId, nuevosDatos, onComplete, onError)
+    }
+
+    fun buscarRegistrosPorCondicion(campo: String, valor: Any, completion: (List<Map<String, Any>>) -> Unit) {
+        firestoreManager.listarRegistrosConCondicion(campo, valor, completion)
     }
 
     interface OnSignInCompleteCallback {

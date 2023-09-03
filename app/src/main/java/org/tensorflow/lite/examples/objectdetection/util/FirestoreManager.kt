@@ -21,6 +21,7 @@ class FirestoreManager(private val collectionName: String) {
                 val registrosList = mutableListOf<Map<String, Any>>()
                 for (document in querySnapshot) {
                     val registro = document.data
+                    registro.set("id", document.id)
                     registrosList.add(registro)
                 }
                 completion(registrosList)
@@ -42,6 +43,33 @@ class FirestoreManager(private val collectionName: String) {
                 val registrosList = mutableListOf<Map<String, Any>>()
                 for (document in querySnapshot) {
                     val registro = document.data
+                    registro.set("id", document.id)
+                    registrosList.add(registro)
+                }
+                completion(registrosList)
+            }
+            .addOnFailureListener {
+                // Manejar el error en caso de falla
+                completion(emptyList())
+            }
+    }
+
+    fun listarRegistrosCon2Condicion(
+        campo1: String,
+        valor1: Any,
+        campo2: String,
+        valor2: Any,
+        completion: (List<Map<String, Any>>) -> Unit
+    ) {
+        getCollection()
+            .whereEqualTo(campo1, valor1)
+            .whereEqualTo(campo2, valor2)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val registrosList = mutableListOf<Map<String, Any>>()
+                for (document in querySnapshot) {
+                    val registro = document.data
+                    registro.set("id", document.id)
                     registrosList.add(registro)
                 }
                 completion(registrosList)

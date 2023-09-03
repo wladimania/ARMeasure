@@ -68,6 +68,15 @@
             android:layout_marginBottom="8dp" />
 
         <Button
+            android:id="@+id/listadoAlumnosButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Listado de Alumnos"
+            android:background="@drawable/button_rounded"
+            android:onClick="onAlumnosListClick"
+            android:layout_marginBottom="8dp" />
+
+        <Button
             android:id="@+id/historyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

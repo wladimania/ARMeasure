@@ -19,24 +19,29 @@
             android:id="@+id/textNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre" />
+            android:text="Nombre"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textFigura"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Figura" />
+            android:text="Figura"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha" />
+            android:text="Fecha"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textAcerto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Acerto" />
+            android:text="Acerto"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
