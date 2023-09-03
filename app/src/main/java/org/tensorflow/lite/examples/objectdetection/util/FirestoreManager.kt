@@ -1,7 +1,9 @@
 package org.tensorflow.lite.examples.objectdetection.util
 
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+
 
 class FirestoreManager(private val collectionName: String) {
 
@@ -9,6 +11,9 @@ class FirestoreManager(private val collectionName: String) {
 
     fun getCollection(): CollectionReference {
         return db.collection(collectionName)
+    }
+    fun getDocumentdata(documentId: String): DocumentReference {
+        return getCollection().document(documentId)
     }
     fun listarRegistros(completion: (List<Map<String, Any>>) -> Unit) {
         getCollection().get()
@@ -47,11 +52,11 @@ class FirestoreManager(private val collectionName: String) {
             }
     }
 
-    fun guardarRegistro(registro: Map<String, Any>, onComplete: () -> Unit, onError: (Exception) -> Unit) {
+    fun guardarRegistro(registro: Map<String, Any>, onComplete: (Any?) -> Unit, onError: (Exception) -> Unit) {
         getCollection()
             .add(registro)
             .addOnSuccessListener {
-                onComplete.invoke()
+                onComplete.invoke(it)
             }
             .addOnFailureListener { exception ->
                 onError.invoke(exception)

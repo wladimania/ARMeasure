@@ -2,14 +2,15 @@ package org.tensorflow.lite.examples.objectdetection
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import org.tensorflow.lite.examples.objectdetection.util.SessionManager
+import com.google.firebase.auth.FirebaseUser
+import org.tensorflow.lite.examples.objectdetection.util.AccesoDAO
+import org.tensorflow.lite.examples.objectdetection.util.UsuariosDAO
 
 class Login : AppCompatActivity() {
 
@@ -33,18 +34,23 @@ class Login : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.password).text.toString()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Por favor, ingresa tu correo electrónico y contraseña", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Por favor, ingresa tu correo electrónico y contraseña",
+                    Toast.LENGTH_LONG
+                ).show()
                 return@setOnClickListener
             }
 
             // Sign in the user
-            auth.signInWithEmailAndPassword(email, password)
+            /*auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // The user is signed in
                         Log.d("LOGIN-FIREBASE", "Sign in successful!")
                         val user = auth.currentUser
                         SessionManager.setCurrentUser(user)
+                        Log.d("APP_MACHONA", "user name: " + user?.displayName)
                         //user?.let { SessionManager.setCurrentUser(it) }
                         startActivity(Intent(this, MenuActivity::class.java))
                     } else {
@@ -55,6 +61,38 @@ class Login : AppCompatActivity() {
                         Toast.makeText(this, "Error: " + task.exception!!.message, Toast.LENGTH_LONG).show()
                     }
                 }
+            */
+            val authManager = UsuariosDAO()
+            authManager.iniciarSesion(
+                email,
+                password,
+                object : UsuariosDAO.OnSignInCompleteCallback {
+                    override fun onSignInSuccess(user: FirebaseUser?) {
+                        // registrar el acceso
+                        var accesoD = AccesoDAO()
+                        if (user != null) {
+                            accesoD.guardarRegistro(user.uid,
+                                onComplete = {
+                                    println("Guardado exitoso")
+                                }, onError = { excepcion ->
+                                    println("Error durante el guardado: $excepcion")
+                                })
+                        }
+                        // El inicio de sesión fue exitoso, puedes navegar a la siguiente pantalla o realizar acciones adicionales
+                        Toast.makeText(this@Login, "Inicio de sesión exitoso", Toast.LENGTH_SHORT)
+                            .show()
+                        startActivity(Intent(this@Login, MenuActivity::class.java))
+                    }
+
+                    override fun onSignInFailure(errorMessage: String?) {
+                        // Hubo un error durante el inicio de sesión, muestra un mensaje de error o realiza acciones de manejo de errores
+                        Toast.makeText(
+                            this@Login,
+                            "Error durante el inicio de sesión: $errorMessage",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
         }
 
         val btnRecuperarClave = findViewById<Button>(R.id.btnRecuperarClave)

@@ -1,11 +1,9 @@
 package org.tensorflow.lite.examples.objectdetection.util
 
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class Lecturas {
+class LecturasDAO {
     private val collectionName = "lecturas"
 
     private val firestoreManager: FirestoreManager
@@ -21,7 +19,7 @@ class Lecturas {
         firestoreManager.listarRegistrosConCondicion(campo, valor, completion)
     }
 
-    fun guardarRegistro(idJugador: String, idCurso: String, nombre: String, figura: String, acerto: String, onComplete: () -> Unit, onError: (Exception) -> Unit) {
+    fun guardarRegistro(idJugador: String, idCurso: String, nombre: String, figura: String, acerto: String, idAcceso: String, onComplete: (Any?) -> Unit, onError: (Exception) -> Unit) {
         val fechaActual = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
         val registro = hashMapOf(
             "idJugador" to idJugador,
@@ -29,7 +27,8 @@ class Lecturas {
             "nombre" to nombre,
             "figura" to figura,
             "fecha" to fechaActual,
-            "acerto" to acerto
+            "acerto" to acerto,
+            "idAcceso" to idAcceso
         )
         firestoreManager.guardarRegistro(registro, onComplete, onError)
     }

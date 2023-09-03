@@ -17,7 +17,6 @@
 package org.tensorflow.lite.examples.objectdetection
 
 
-import android.content.res.AssetFileDescriptor
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -30,7 +29,7 @@ import com.ingenieriajhr.teachablemachine.tflite.ClassifyImageTf
 import com.ingenieriajhr.teachablemachine.tflite.ReturnInterpreter
 import com.ingenieriiajhr.jhrCameraX.BitmapResponse
 import com.ingenieriiajhr.jhrCameraX.CameraJhr
-import org.tensorflow.lite.examples.objectdetection.util.Lecturas
+import org.tensorflow.lite.examples.objectdetection.util.LecturasDAO
 import org.tensorflow.lite.examples.objectdetection.util.SessionManager
 
 
@@ -40,7 +39,7 @@ import org.tensorflow.lite.examples.objectdetection.util.SessionManager
  */
 class MainActivity : AppCompatActivity() {
     private var isResetting = false
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     lateinit var cameraJhr: CameraJhr
     lateinit var classifyImageTf: ClassifyImageTf
     val formulasCorrectas = mapOf(
@@ -58,7 +57,8 @@ class MainActivity : AppCompatActivity() {
         const val OUTPUT_SIZE = 3
     }
 
-    val classes = arrayOf("CUADRADO", "ESTRELLA", "TRIANGULO", "CIRCULO", "HEXAGONO", "RECTANGULO", "ROMBO")
+    val classes =
+        arrayOf("CUADRADO", "ESTRELLA", "TRIANGULO", "CIRCULO", "HEXAGONO", "RECTANGULO", "ROMBO")
 
     private var correctAnswer: String? = null
     private fun clearFormulaBackgrounds() {
@@ -77,45 +77,47 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             startTimer()
-           // reset()
+            // reset()
             clearFormulaBackgrounds()
             isResetting = false
         }, 10000) // 10000 milisegundos = 10 segundos
 
         val formulaClickeada = clickedView.text.toString()
-
+        var resu = "No";
         if (formulaClickeada == formulasCorrectas[correctAnswer]) {
+            resu = "Si"
             clickedView.setBackgroundResource(R.drawable.background_gree)
         } else {
-            var resu = "No";
             for (optionView in formulaOptions) {
-
                 if (optionView == clickedView) {
                     optionView.setBackgroundResource(R.drawable.background_red)
                 } else if (formulasCorrectas[correctAnswer] == optionView.text.toString()) {
                     optionView.setBackgroundResource(R.drawable.background_gree)
-                    resu = "Si"
                 }
             }
-            val clas = Lecturas()
-            val user = SessionManager.getCurrentUser();
-            if (user != null) {
-                val nombre = user.displayName?.ifEmpty { "" }
-                if (nombre != null) {
-                    clas.guardarRegistro(user.uid, "", nombre , this.correctAnswer.toString()
-                        , resu, onComplete = {
-                            // La operación de guardado se ha completado con éxito
-                            println("Guardado exitoso")
-                            // Aquí puedes realizar otras acciones después de un guardado exitoso
-                        },
-                        onError = { excepcion ->
-                            // Ocurrió un error durante la operación de guardado
-                            println("Error durante el guardado: $excepcion")
-                            // Aquí puedes manejar el error de acuerdo a tus necesidades
-                        })
-                }
-            }
-
+        }
+        val clas = LecturasDAO()
+        val user = SessionManager.getCurrentUser();
+        val userInfo = SessionManager.getDataUser();
+        val idAcceso = SessionManager.getIdAcceso();
+        if (user != null && userInfo != null && idAcceso != null) {
+            Log.d("APP_MACHONA", "nombre de usuario" + userInfo.getNombre())
+            clas.guardarRegistro(user.uid,
+                userInfo.getIdCurso(),
+                userInfo.getNombre(),
+                this.correctAnswer.toString(),
+                resu,
+                idAcceso,
+                onComplete = {
+                    // La operación de guardado se ha completado con éxito
+                    println("Guardado exitoso")
+                    // Aquí puedes realizar otras acciones después de un guardado exitoso
+                },
+                onError = { excepcion ->
+                    // Ocurrió un error durante la operación de guardado
+                    println("Error durante el guardado: $excepcion")
+                    // Aquí puedes manejar el error de acuerdo a tus necesidades
+                })
         }
     }
 
@@ -125,6 +127,7 @@ class MainActivity : AppCompatActivity() {
             clearFormulaBackgrounds()
         }, 10000) // 10000 milisegundos = 10 segundos
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -153,7 +156,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (cameraJhr.allpermissionsGranted() && !cameraJhr.ifStartCamera){
+        if (cameraJhr.allpermissionsGranted() && !cameraJhr.ifStartCamera) {
             startCameraJhr()
         } else {
             cameraJhr.noPermissions()
@@ -197,6 +200,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         setRandomFormulaTexts(formulas)
                     }
+
                     "ESTRELLA" -> {
                         val formulas = listOf(
                             "Área de la estrella: (Diagonal mayor * Diagonal menor) / 2",
@@ -205,6 +209,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         setRandomFormulaTexts(formulas)
                     }
+
                     "TRIANGULO" -> {
                         val formulas = listOf(
                             "Área del triángulo: (Base * Altura) / 2",
@@ -213,6 +218,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         setRandomFormulaTexts(formulas)
                     }
+
                     "CIRCULO" -> {
                         val formulas = listOf(
                             "Área del círculo: π * Radio^2",
@@ -221,6 +227,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         setRandomFormulaTexts(formulas)
                     }
+
                     "HEXAGONO" -> {
                         val formulas = listOf(
                             "Área del hexágono: (Lado * Apotema) / 2",
@@ -229,6 +236,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         setRandomFormulaTexts(formulas)
                     }
+
                     "RECTANGULO" -> {
                         val formulas = listOf(
                             "Área del rectángulo: Base * Altura",
@@ -237,6 +245,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         setRandomFormulaTexts(formulas)
                     }
+
                     "ROMBO" -> {
                         val formulas = listOf(
                             "Área del rombo: (Diagonal mayor * Diagonal menor) / 2",
@@ -245,6 +254,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         setRandomFormulaTexts(formulas)
                     }
+
                     else -> {
                         clearFormulaTexts()
                         clearFormulaBackgrounds()
@@ -264,7 +274,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setFormulaTexts(correctFormula: String, incorrectFormula1: String, incorrectFormula2: String) {
+    private fun setFormulaTexts(
+        correctFormula: String,
+        incorrectFormula1: String,
+        incorrectFormula2: String
+    ) {
         binding.textViewFormulaCorrect.text = correctFormula
         binding.textViewFormulaIncorrect1.text = incorrectFormula1
         binding.textViewFormulaIncorrect2.text = incorrectFormula2

@@ -1,14 +1,14 @@
 package org.tensorflow.lite.examples.objectdetection
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.tensorflow.lite.examples.objectdetection.util.LecturaAdapter
-import org.tensorflow.lite.examples.objectdetection.util.Lecturas
+import org.tensorflow.lite.examples.objectdetection.util.LecturasDAO
 import org.tensorflow.lite.examples.objectdetection.util.SessionManager
 
 
@@ -30,8 +30,8 @@ class HistorialActivity : AppCompatActivity() {
 
         val currentUser = SessionManager.getCurrentUser()
         if (currentUser != null) {
-
-            val clas = Lecturas()
+            Log.d("APP_MACHONA", currentUser.uid)
+            val clas = LecturasDAO()
 
 //            clas.buscarRegistrosPorCondicion("idCurso", currentUser) { registrosList ->
             clas.listarTodosLosRegistros() { registrosList ->

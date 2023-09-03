@@ -10,7 +10,9 @@ import android.widget.RadioButton
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import org.tensorflow.lite.examples.objectdetection.data.model.DataUser
 import org.tensorflow.lite.examples.objectdetection.util.SessionManager
+import kotlin.random.Random
 
 class RegistroActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -55,11 +57,17 @@ class RegistroActivity : AppCompatActivity() {
                     val uid = user?.uid ?: ""
 
                     // Crear un mapa con los datos adicionales del usuario
+                    var codigo: String = ""
+                    if(esAlumno != "Alumno") {
+                        codigo = generarCodigoUnico()
+                    }
                     val userData = hashMapOf(
                         "nombre" to nombre,
                         "correo" to correo,
-                        "esAlumno" to esAlumno
+                        "esAlumno" to esAlumno,
+                        "idCurso" to codigo
                     )
+
 
                     // Guardar los datos en Firestore
                     val db = FirebaseFirestore.getInstance()
@@ -67,7 +75,13 @@ class RegistroActivity : AppCompatActivity() {
                         .set(userData)
                         .addOnSuccessListener {
                             // Registro exitoso
+                            val dataUser = DataUser()
                             SessionManager.setCurrentUser(user)
+
+                            dataUser.setCorreo(userData.get("correo").toString())
+                            dataUser.setNombre(userData.get("nombre").toString())
+                            dataUser.setEsAlumno(userData.get("esAlumno").toString())
+                            SessionManager.setDataUser(dataUser)
                             Log.d("APP_MACHONA", "registro bien")
                             Toast.makeText(this, "Registro exitoso", Toast.LENGTH_LONG).show()
                             finish()
@@ -84,4 +98,14 @@ class RegistroActivity : AppCompatActivity() {
                 }
             }
     }
+
+
+    private fun generarCodigoUnico(): String {
+        val random = Random(System.currentTimeMillis())
+        val codigo = random.nextInt(1000000) // Genera un número aleatorio de 0 a 999999
+
+        // Formatea el número como una cadena de 6 dígitos, rellenando con ceros a la izquierda si es necesario
+        return String.format("%06d", codigo)
+    }
+
 }

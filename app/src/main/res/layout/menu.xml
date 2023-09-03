@@ -30,65 +30,71 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Botones del menú -->
-    <Button
-        android:id="@+id/startARMeasureButton"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Empezar Area Measure"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/logoAdorno1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/button_rounded"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="onStartARMeasureClick"
-        tools:ignore="OnClick" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <Button
-        android:id="@+id/historyButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Historial"
-        app:layout_constraintTop_toBottomOf="@+id/startARMeasureButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/button_rounded"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="onHistoryClick"
-        tools:ignore="OnClick" />
+        <Button
+            android:id="@+id/startARMeasureButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Empezar Area Measure"
+            android:background="@drawable/button_rounded"
+            android:onClick="onStartARMeasureClick"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Configuración"
-        app:layout_constraintTop_toBottomOf="@+id/historyButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/button_rounded"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="onSettingsClick"
-        tools:ignore="OnClick" />
+        <Button
+            android:id="@+id/verCodigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver código"
+            android:background="@drawable/button_rounded"
+            android:onClick="onViewCodeClick"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/profileButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Perfil"
-        app:layout_constraintTop_toBottomOf="@+id/settingsButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_rounded"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="onProfileClick"
-        tools:ignore="OnClick" />
+        <Button
+            android:id="@+id/modificarCodigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modificar Código"
+            android:background="@drawable/button_rounded"
+            android:onClick="onManageCodeClick"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/historyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial"
+            android:background="@drawable/button_rounded"
+            android:onClick="onHistoryClick"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configuración"
+            android:background="@drawable/button_rounded"
+            android:onClick="onSettingsClick"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/profileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Perfil"
+            android:background="@drawable/button_rounded"
+            android:onClick="onProfileClick" />
+
+    </LinearLayout>
+
 
     <!-- Logo Adornos -->
     <ImageView
@@ -99,7 +105,7 @@
         android:layout_marginTop="32dp"
         android:src="@drawable/logo3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileButton" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonPanel" />
 
     <ImageView
         android:id="@+id/logoAdorno4"
@@ -109,6 +115,6 @@
         android:layout_marginTop="32dp"
         android:src="@drawable/logo4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileButton" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonPanel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
